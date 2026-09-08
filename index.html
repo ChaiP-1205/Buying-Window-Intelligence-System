@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Pinnacle Buying-Window Intelligence — GTM Demo</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, "Segoe UI", Roboto, sans-serif;
+    background: #f7f8fa;
+    color: #1a2332;
+    line-height: 1.55;
+    padding: 40px 20px;
+  }
+  .container { max-width: 1050px; margin: 0 auto; }
+  h1 {
+    font-size: 30px; color: #0d2b4e; margin-bottom: 8px;
+    border-bottom: 3px solid #d64541; padding-bottom: 14px;
+  }
+  .subtitle {
+    color: #566a80; font-size: 16px; margin-bottom: 32px;
+    font-style: italic;
+  }
+  .section {
+    background: white; border-radius: 8px; padding: 30px 34px;
+    margin-bottom: 20px; box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+  }
+  h2 {
+    font-size: 22px; color: #0d2b4e; margin-bottom: 18px;
+    display: flex; align-items: center;
+  }
+  h2 .num {
+    background: #d64541; color: white; width: 32px; height: 32px;
+    border-radius: 50%; display: inline-flex; align-items: center;
+    justify-content: center; margin-right: 14px; font-size: 16px;
+  }
+  h3 {
+    font-size: 16px; color: #0d2b4e; margin: 18px 0 10px;
+    font-weight: 600;
+  }
+  p { margin-bottom: 12px; font-size: 15px; }
+
+  .big-quote {
+    font-size: 19px; color: #0d2b4e; font-weight: 500;
+    padding: 8px 0 4px; line-height: 1.4;
+  }
+
+  .compare {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 20px; margin: 20px 0 8px;
+  }
+  .compare-box { padding: 22px; border-radius: 8px; font-size: 14px; }
+  .before { background: #fef2f2; border: 1px solid #fecaca; }
+  .after { background: #f0fdf4; border: 1px solid #bbf7d0; }
+  .compare-box .label {
+    font-weight: 700; font-size: 12px; text-transform: uppercase;
+    letter-spacing: 1px; margin-bottom: 12px;
+  }
+  .before .label { color: #b91c1c; }
+  .after .label { color: #15803d; }
+  .compare-box h4 { font-size: 15px; margin-bottom: 8px; color: #0d2b4e; }
+  .compare-box p { font-size: 14px; margin-bottom: 8px; }
+  .compare-box .metric {
+    font-size: 13px; font-weight: 600; margin-top: 10px;
+    padding-top: 10px; border-top: 1px dashed rgba(0,0,0,0.15);
+  }
+  .before .metric { color: #b91c1c; }
+  .after .metric { color: #15803d; }
+
+  .benefit-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 14px; margin: 18px 0;
+  }
+  .benefit {
+    background: #f0f4f9; padding: 18px; border-radius: 6px;
+    border-top: 3px solid #d64541;
+  }
+  .benefit .icon {
+    font-size: 22px; margin-bottom: 8px;
+  }
+  .benefit .title {
+    font-weight: 700; color: #0d2b4e; font-size: 15px; margin-bottom: 6px;
+  }
+  .benefit .desc { font-size: 13px; color: #566a80; }
+
+  table {
+    width: 100%; border-collapse: collapse; margin: 14px 0;
+    font-size: 14px;
+  }
+  th { background: #0d2b4e; color: white; padding: 12px; text-align: left; font-weight: 600; }
+  td { padding: 12px; border-bottom: 1px solid #e5e7eb; }
+  tr:hover { background: #f9fafb; }
+  .tier {
+    display: inline-block; padding: 3px 10px; border-radius: 12px;
+    font-size: 11px; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  .tier-1 { background: #fee2e2; color: #b91c1c; }
+  .tier-2 { background: #ffedd5; color: #c2410c; }
+  .tier-3 { background: #e0e7ff; color: #4338ca; }
+  .tier-x { background: #f3f4f6; color: #6b7280; }
+
+  .flow {
+    display: grid; grid-template-columns: repeat(5, 1fr);
+    gap: 8px; margin: 20px 0;
+    align-items: stretch;
+  }
+  .flow-step {
+    background: #0d2b4e; color: white; padding: 16px 12px;
+    border-radius: 6px; font-size: 13px; text-align: center;
+    position: relative;
+  }
+  .flow-step .step-num {
+    background: white; color: #0d2b4e; width: 24px; height: 24px;
+    border-radius: 50%; display: inline-flex; align-items: center;
+    justify-content: center; font-weight: 700; margin-bottom: 8px;
+  }
+  .flow-step .step-title { font-weight: 600; margin-bottom: 4px; font-size: 13px; }
+  .flow-step .step-detail { font-size: 11px; opacity: 0.85; line-height: 1.35; }
+
+  .callout {
+    background: #fef9c3; border-left: 4px solid #ca8a04;
+    padding: 14px 18px; margin: 14px 0; font-size: 14px;
+    border-radius: 4px;
+  }
+  .callout strong { color: #713f12; }
+
+  .callout-blue {
+    background: #dbeafe; border-left: 4px solid #2563eb;
+    padding: 14px 18px; margin: 14px 0; font-size: 14px;
+    border-radius: 4px;
+  }
+  .callout-blue strong { color: #1e40af; }
+
+  ul, ol { padding-left: 22px; font-size: 15px; margin-bottom: 12px; }
+  li { margin-bottom: 8px; }
+
+  .sources {
+    display: grid; grid-template-columns: repeat(2, 1fr);
+    gap: 12px; margin: 14px 0;
+  }
+  .source {
+    background: #f0f4f9; padding: 14px 16px; border-radius: 6px;
+    font-size: 13px; border-left: 3px solid #0d2b4e;
+  }
+  .source .name { font-weight: 700; color: #0d2b4e; font-size: 14px; margin-bottom: 4px; }
+  .source .what { color: #566a80; }
+
+  .next-steps {
+    counter-reset: step;
+  }
+  .next-steps .step {
+    padding: 14px 18px 14px 60px; margin-bottom: 10px;
+    background: #f7f8fa; border-radius: 6px; position: relative;
+    font-size: 14px;
+  }
+  .next-steps .step::before {
+    counter-increment: step; content: counter(step);
+    position: absolute; left: 18px; top: 14px;
+    background: #d64541; color: white; width: 30px; height: 30px;
+    border-radius: 50%; display: flex; align-items: center;
+    justify-content: center; font-weight: 700; font-size: 14px;
+  }
+  .next-steps .step-title { font-weight: 700; color: #0d2b4e; margin-bottom: 4px; }
+  .next-steps .step-desc { color: #566a80; font-size: 13px; }
+
+  .footer {
+    text-align: center; color: #94a3b8; font-size: 12px;
+    margin-top: 24px; padding-top: 20px; border-top: 1px solid #e5e7eb;
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+<h1>Finding Pinnacle's Next Customers Before They Raise Their Hand</h1>
+<p class="subtitle">A working prototype that surfaces facilities in a live buying window — so SDRs stop guessing and AEs walk into every call with a relevant reason to be there.</p>
+
+<!-- ================================================================ -->
+<div class="section">
+  <h2><span class="num">1</span>The Problem</h2>
+  <p class="big-quote">"Our SDRs know the target list. What they don't know is which accounts are ready to hear from us <em>this week</em>."</p>
+
+  <p>In SaaS, GTM teams have it easy. Signals like funding rounds, hiring bursts, tech-stack changes, or SOC-2 renewals show up neatly inside Apollo, ZoomInfo, or Clay. A marketer can build a scored list in an afternoon.</p>
+
+  <p><strong>Industrial reliability is different.</strong> The signals that tell you a refinery or chemical plant is actively looking for a product like Pinnacle's Newton don't live inside those tools. They live in places no enrichment vendor packages:</p>
+
+  <div class="sources">
+    <div class="source">
+      <div class="name">Government incident reports</div>
+      <div class="what">CSB, OSHA, EPA — 40-100 page PDFs describing exactly what failed, why, and what the operator now needs to fix</div>
+    </div>
+    <div class="source">
+      <div class="name">Turnaround announcements</div>
+      <div class="what">Trade press, LinkedIn posts, tender databases — signal an 18-month buying window opens</div>
+    </div>
+    <div class="source">
+      <div class="name">Earnings call transcripts</div>
+      <div class="what">Reliability capex mentions, maintenance spend commentary from operators</div>
+    </div>
+    <div class="source">
+      <div class="name">Industry publications</div>
+      <div class="what">Inspectioneering, Hydrocarbon Processing — bylines from reliability engineers signal expertise and hiring</div>
+    </div>
+    <div class="source">
+      <div class="name">Regulatory filings</div>
+      <div class="what">10-K disclosures on reliability spend, insurance filings, PSM audit outcomes</div>
+    </div>
+    <div class="source">
+      <div class="name">Leadership hires</div>
+      <div class="what">A new VP Reliability or Chief Reliability Officer triggers a tooling review within 6 months, 90% of the time</div>
+    </div>
+  </div>
+
+  <p>All of these are <strong>unstructured</strong> — long documents, prose, PDFs. Clay and Apollo cannot read them. That's the gap this project fills.</p>
+</div>
+
+<!-- ================================================================ -->
+<div class="section">
+  <h2><span class="num">2</span>What Changes on Monday Morning</h2>
+  <div class="compare">
+    <div class="compare-box before">
+      <div class="label">Before — Today</div>
+      <h4>An SDR's morning</h4>
+      <p>Opens HubSpot. Sees a target list of 200 refineries and chemical plants. Has no idea which ones are actually looking to buy right now. Sends a generic "we help refineries improve reliability" email sequence to everyone.</p>
+      <div class="metric">
+        Result: 1–2% reply rate. AEs get low-quality meetings. Pipeline velocity stalls.
+      </div>
+    </div>
+    <div class="compare-box after">
+      <div class="label">After — With this signal engine</div>
+      <h4>Same SDR, next Monday</h4>
+      <p>Opens HubSpot. Sees 8 accounts flagged this week with red "buying window open" banners. Each shows the specific incident, the failure mode, and a suggested talk track. Sends a warm outreach referencing the exact facility event.</p>
+      <div class="metric">
+        Expected result: dramatically higher reply rates, warmer AE meetings, faster deals.
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ================================================================ -->
+<div class="section">
+  <h2><span class="num">3</span>The Benefits — What This Unlocks for Sales &amp; Marketing</h2>
+
+  <div class="benefit-grid">
+    <div class="benefit">
+      <div class="icon">🎯</div>
+      <div class="title">Sharper Targeting</div>
+      <div class="desc">SDRs stop spraying the whole ICP. They focus on the 5–10% of accounts with a live buying trigger — the same volume of outreach, dramatically higher hit rate.</div>
+    </div>
+    <div class="benefit">
+      <div class="icon">⚡</div>
+      <div class="title">Faster Pipeline Velocity</div>
+      <div class="desc">Every outbound touch has a relevant "why now" — the incident, the turnaround, the leadership change. Discovery calls skip the "why should we care" phase and go straight to solution fit.</div>
+    </div>
+    <div class="benefit">
+      <div class="icon">💬</div>
+      <div class="title">Better Message Personalization</div>
+      <div class="desc">Cold email templates evolve into event-driven outreach. Instead of "we help refineries," it's "we noticed the incident at your Baytown facility — here's how our platform would have flagged it 6 months ahead."</div>
+    </div>
+    <div class="benefit">
+      <div class="icon">📈</div>
+      <div class="title">Higher MQL → SQL Conversion</div>
+      <div class="desc">Leads flagged by trigger events convert at 3–5× the rate of cold-list leads across the industry. This is not opinion — it's how modern intent-based ABM works.</div>
+    </div>
+    <div class="benefit">
+      <div class="icon">🔎</div>
+      <div class="title">Defensible Signal Moat</div>
+      <div class="desc">Competitors can buy the same Apollo data you do. They can't buy this — it takes engineering to reach. Every week the engine runs, the intelligence advantage compounds.</div>
+    </div>
+    <div class="benefit">
+      <div class="icon">🧭</div>
+      <div class="title">AE Efficiency</div>
+      <div class="desc">AEs walk into every discovery call with the incident summary, failure mode, and product-fit reasoning already in the CRM. Prep time collapses. Meetings feel less like cold pitches, more like consulting conversations.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ================================================================ -->
+<div class="section">
+  <h2><span class="num">4</span>The Prototype — What I Actually Built</h2>
+
+  <p>To prove the concept, I built one end-to-end example against one signal source: the US Chemical Safety Board's incident investigation reports. The engine reads every recent incident PDF, extracts what happened, and scores whether the affected facility is a good fit for Pinnacle's Newton platform.</p>
+
+  <div class="flow">
+    <div class="flow-step">
+      <div class="step-num">1</div>
+      <div class="step-title">Filter to ICP</div>
+      <div class="step-detail">Only Oil &amp; Refining and Chemical Manufacturing incidents</div>
+    </div>
+    <div class="flow-step">
+      <div class="step-num">2</div>
+      <div class="step-title">Read the report</div>
+      <div class="step-detail">AI reads the full PDF — no manual review needed</div>
+    </div>
+    <div class="flow-step">
+      <div class="step-num">3</div>
+      <div class="step-title">Extract facts</div>
+      <div class="step-detail">Operator, facility, failure mode, severity, casualties</div>
+    </div>
+    <div class="flow-step">
+      <div class="step-num">4</div>
+      <div class="step-title">Score fit</div>
+      <div class="step-detail">Would Pinnacle's product have prevented this? Yes/No + reasoning</div>
+    </div>
+    <div class="flow-step">
+      <div class="step-num">5</div>
+      <div class="step-title">Rank &amp; deliver</div>
+      <div class="step-detail">Sorted lead list ready for HubSpot import</div>
+    </div>
+  </div>
+
+  <h3>Result — 8 real incidents, ranked by buying-window urgency</h3>
+  <table>
+    <thead>
+      <tr><th>Tier</th><th>Operator</th><th>Facility</th><th>What Happened</th><th>Score</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><span class="tier tier-1">Tier 1</span></td><td>Husky Energy</td><td>Superior Refinery, WI</td><td>Slide valve erosion — Newton would have caught this</td><td><strong>70</strong></td></tr>
+      <tr><td><span class="tier tier-1">Tier 1</span></td><td>KMCO</td><td>Crosby, TX</td><td>Brittle overload — cumulative failure mode</td><td><strong>70</strong></td></tr>
+      <tr><td><span class="tier tier-2">Tier 2</span></td><td>Dow Chemical</td><td>Plaquemine, LA</td><td>Rupture disc puncture — sensor data would have warned</td><td><strong>57</strong></td></tr>
+      <tr><td><span class="tier tier-3">Tier 3</span></td><td>PES</td><td>Philadelphia, PA</td><td>HF corrosion — classic degradation mode</td><td><strong>47</strong></td></tr>
+      <tr><td><span class="tier tier-x">Skip</span></td><td>PEMEX</td><td>Deer Park, TX</td><td>Human error — not a product-fit incident</td><td>52</td></tr>
+      <tr><td><span class="tier tier-x">Skip</span></td><td>ExxonMobil</td><td>Baton Rouge, LA</td><td>Human error — bolt removal mistake</td><td>4</td></tr>
+    </tbody>
+  </table>
+
+  <div class="callout">
+    <strong>The critical result:</strong> ExxonMobil is Pinnacle's dream logo — but this specific ExxonMobil incident correctly ranks LAST. The engine understood it was a human procedural error, not the kind of asset failure Newton addresses. A simple keyword filter would have wasted an SDR's morning chasing a bad-fit lead. This engine is smart enough not to.
+  </div>
+</div>
+
+<!-- ================================================================ -->
+<div class="section">
+  <h2><span class="num">5</span>What This Doesn't Do Yet — And What Comes Next</h2>
+
+  <p>This is one signal source, one part of the picture. To turn this into a real GTM engine, three things need to happen next.</p>
+
+  <div class="next-steps">
+    <div class="step">
+      <div class="step-title">Find the humans to contact</div>
+      <div class="step-desc">Right now we know <em>which facility</em> to target. We don't yet have the reliability engineer's email or the plant manager's phone number. Standard tools like Apollo and ZoomInfo cover HQ executives well, but site-level engineering titles are patchy. Next step: build a custom contact-enrichment layer that combines Apollo with industry-specific sources — API/SMRP member directories, Inspectioneering author bylines, LinkedIn Sales Navigator scrapes filtered to the specific facility.</div>
+    </div>
+    <div class="step">
+      <div class="step-title">Add more signal sources</div>
+      <div class="step-desc">CSB catches only the biggest incidents. To spot every buying window, we need to fuse 5–8 signal sources: turnaround announcements from trade press, earnings call transcripts, 10-K reliability capex mentions, insurance renewal windows, leadership hires. Each source adds a few hours of engineering; together they become a signal moat competitors can't buy.</div>
+    </div>
+    <div class="step">
+      <div class="step-title">Personalize the outreach</div>
+      <div class="step-desc">Once we know who to contact and why they're a fit, the next layer is drafting the actual first-touch email. Each SDR message references the specific incident, the failure mode, and how Newton would have caught it. This is the layer that turns a scored account into a booked meeting — and it's a straightforward extension of the AI extraction pattern already built here.</div>
+    </div>
+    <div class="step">
+      <div class="step-title">Close the loop with closed-won</div>
+      <div class="step-desc">The scoring weights in this prototype are educated guesses. Once the engine has run for 3-6 months alongside Pinnacle's real pipeline, we can look at which signals actually predicted closed-won deals and recalibrate. The engine gets smarter every quarter without new engineering.</div>
+    </div>
+  </div>
+
+  <div class="callout-blue">
+    <strong>The end vision:</strong> Every Monday morning, every AE and SDR opens HubSpot to a personalized queue. Each queued account has the trigger event, the buying-window urgency, the recommended talk track, the right contacts, and a drafted first email — all generated overnight by the signal engine. That's what modern GTM engineering looks like. This demo is the first working stage of that vision.
+  </div>
+</div>
+
+<!-- ================================================================ -->
+<div class="section">
+  <h2><span class="num">6</span>Honest Notes — What I'd Flag If This Were Real</h2>
+  <ul>
+    <li><strong>Scoring weights are educated guesses.</strong> In production, calibrate against Pinnacle's actual won and lost deals.</li>
+    <li><strong>Product-fit judgment is AI opinion.</strong> A Pinnacle reliability engineer should review the top-5 flagged accounts weekly to catch misjudgments.</li>
+    <li><strong>Single signal source.</strong> One source is a demo. Real defensibility comes from fusing many.</li>
+    <li><strong>Contact discovery is the missing piece.</strong> Knowing the facility is not the same as knowing the person to email. That's the next build.</li>
+    <li><strong>No feedback loop yet.</strong> Production needs closed-loop attribution — did the flagged accounts actually convert?</li>
+  </ul>
+</div>
+
+<div class="footer">
+  Prototype for Pinnacle GTM Ops Manager interview • Built as a working end-to-end proof of concept in a few hours
+</div>
+
+</div>
+</body>
+</html>
